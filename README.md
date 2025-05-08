@@ -1,5 +1,10 @@
 # Nginx Maintenance Mode
 
+## Forked by jefc1111 to add the following
+1. Ability to use optional third arg "batch-mode" which suppresses most terminal output and also prevents ngnix reload in the main `maintenance.sh` script. 
+2. Adds new script `toggle-all.sh` which attemps to switch maintenance mode on or off for all sites in `/etc/nginx/sites-enabled` which mention "maintenance-page.conf" in their server block.
+
+
 ```
            _   __      _
           / | / /___ _(_)___  _  __
@@ -29,7 +34,7 @@
 #### Download and execute the script:
 
 ```bash
-$ git clone https://github.com/tmiland/Nginx-Maintenance-Mode.git
+$ git clone https://github.com/jefc1111/nginx-maintenance-mode
 $ cd Nginx-Maintenance-Mode
 $ cp -rp ./maintenance-page.conf /etc/nginx/snippets/
 $ git clone https://github.com/tmiland/server-error-pages.git /etc/nginx/html/server-error-pages
