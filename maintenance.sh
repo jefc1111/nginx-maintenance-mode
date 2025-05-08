@@ -3,6 +3,8 @@ set -e
 
 ## Author: Tommy Miland (@tmiland) - Copyright (c) 2019
 
+## Amendments by Geoff Clayton (@jefc1111)
+
 
 ######################################################################
 ####                   Nginx Maintenance mode                     ####
@@ -191,7 +193,11 @@ function checkToggleOn() {
   then
     echo -e "${RED}${ERROR} Maintenance mode is already off for $server_name ${NC}"
     echo -e "${SHOW_STATUS} \n"
-    exit 1
+    if ! [ "$3" == "batch-mode" ];
+    then
+      exit 1
+    fi
+    exit 0
   fi
 }
 
@@ -201,7 +207,11 @@ function checkToggleOff() {
   then
     echo -e "${RED}${ERROR} Maintenance mode is already on for $server_name ${NC}"
     echo -e "${SHOW_STATUS} \n"
-    exit 1
+    if ! [ "$3" == "batch-mode" ];
+    then
+      exit 1
+    fi
+    exit 0
   fi
 }
 
@@ -236,27 +246,40 @@ main() {
     checkDirExists
     checkToggleOff
     # Enable Maintenance Mode
-    echo -e "${ORANGE}${ARROW} Enabling maintenance mode.. ${NC}"
+    echo -e "${ORANGE}${ARROW} Enabling maintenance mode for '${1}'.. ${NC}"
     cd $maintenance_file_path || exit 1
     cp -rp maintenance-page_off.html $server_name-maintenance-page_on.html
-    echo -e "${GREEN}${DONE} Maintenance mode has been enabled ${NC}"
-    restartNginx
+    echo -e "${GREEN}${DONE} Maintenance mode has been enabled for '${1}' ${NC}"
+    if ! [ "$3" == "batch-mode" ];
+    then
+      restartNginx
+    fi
 elif [ "$2" == "off" ]
   then
     chk_permissions
     checkDirExists
     checkToggleOn
     # Disable Maintenance Mode
-    echo -e "${ORANGE}${ARROW} Disabling maintenance mode.. ${NC}"
+    echo -e "${ORANGE}${ARROW} Disabling maintenance mode for '${1}'.. ${NC}"
     cd $maintenance_file_path || exit 1
     rm $server_name-maintenance-page_on.html
-    echo -e "${GREEN}${DONE} Maintenance mode has been disabled ${NC}"
-    restartNginx
+    echo -e "${GREEN}${DONE} Maintenance mode has been disabled for '${1}' ${NC}"
+    if ! [ "$3" == "batch-mode" ];
+    then
+      restartNginx
+    fi
   else
     echo -e "${INPUT_CHECK}"
   fi
 }
 
-header
+if ! [ "$3" == "batch-mode" ];
+then
+  header
+fi
 main $@
-exit_script
+if ! [ "$3" == "batch-mode" ];
+then
+  exit_script
+fi
+exit
