@@ -56,7 +56,7 @@ include snippets/maintenance-page.conf;
 #### Optionally
 
 ```bash
-$ ln -s /path/to/Nginx-Maintenance-Mode/maintenance.sh /usr/bin/maintenance
+$ ln -s /path/to/nginx-maintenance-mode/maintenance.sh /usr/bin/maintenance
 ```
 
 #### Check for errors
