@@ -35,7 +35,7 @@
 
 ```bash
 $ git clone https://github.com/jefc1111/nginx-maintenance-mode
-$ cd Nginx-Maintenance-Mode
+$ cd nginx-maintenance-mode
 $ cp -rp ./maintenance-page.conf /etc/nginx/snippets/
 $ git clone https://github.com/tmiland/server-error-pages.git /etc/nginx/html/server-error-pages
 $ cp -rp /etc/nginx/html/server-error-pages/_site/maintenance-page.html /etc/nginx/html/server-error-pages/_site/maintenance-page_off.html
